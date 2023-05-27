@@ -1,5 +1,55 @@
-import mthPagination from 'mth-pagination';
 import { useCallback, useMemo, useRef, useState } from 'react';
+
+export const DOTS = 'dots';
+
+function range(start: number, end: number) {
+  const length = end - start + 1;
+  return Array.from({ length }, (_, index) => index + start);
+}
+
+const getRange = (
+  siblings: number,
+  boundaries: number,
+  total: number,
+  activePage: number
+) => {
+  const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
+  if (totalPageNumbers >= total) {
+    return range(1, total);
+  }
+  const leftSiblingIndex = Math.max(activePage - siblings, boundaries);
+
+  const rightSiblingIndex = Math.min(activePage + siblings, total - boundaries);
+
+  const shouldShowLeftDots = leftSiblingIndex > boundaries + 2;
+  const shouldShowRightDots = rightSiblingIndex < total - (boundaries + 1);
+
+  if (!shouldShowLeftDots && shouldShowRightDots) {
+    const leftItemCount = siblings * 2 + boundaries + 2;
+    return [
+      ...range(1, leftItemCount),
+      DOTS,
+      ...range(total - (boundaries - 1), total),
+    ];
+  }
+
+  if (shouldShowLeftDots && !shouldShowRightDots) {
+    const rightItemCount = boundaries + 1 + 2 * siblings;
+    return [
+      ...range(1, boundaries),
+      DOTS,
+      ...range(total - rightItemCount, total),
+    ];
+  }
+
+  return [
+    ...range(1, boundaries),
+    DOTS,
+    ...range(leftSiblingIndex, rightSiblingIndex),
+    DOTS,
+    ...range(total - boundaries + 1, total),
+  ];
+};
 
 export interface UseMthPaginationParams {
   /** Active page number */
@@ -15,29 +65,12 @@ export interface UseMthPaginationParams {
 }
 
 export const useMthPagination = (params: UseMthPaginationParams) => {
-  const { page, total, siblings, boundaries, onChange } = params;
+  const { page, total, siblings = 1, boundaries = 1, onChange } = params;
 
   const [activePage, setActivePage] = useState(page);
 
-  const pagination = useMemo(() => {
-    // stupid work around for testing
-    // @ts-ignore
-    if (mthPagination.default) {
-      // @ts-ignore
-      return new mthPagination.default({
-        total,
-        page: activePage,
-        siblings,
-        boundaries,
-      });
-    }
-    /* c8 ignore next 6 */
-    return new mthPagination({
-      total,
-      page: activePage,
-      siblings,
-      boundaries,
-    });
+  const range = useMemo(() => {
+    return getRange(siblings, boundaries, total, activePage);
   }, [total, activePage, siblings, boundaries]);
 
   const onChangeRef = useRef(onChange);
@@ -89,7 +122,7 @@ export const useMthPagination = (params: UseMthPaginationParams) => {
     last,
     next,
     prev,
-    range: pagination.range as (number | 'dots')[],
+    range,
     setPage,
     total,
   };

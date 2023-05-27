@@ -34,7 +34,7 @@ function App() {
                 if (isDot) {
                   return;
                 }
-                pagination.setPage(range);
+                pagination.setPage(range as number);
               }}
               key={index}
             >

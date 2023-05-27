@@ -1,10 +1,5 @@
 lockfileVersion: '6.0'
 
-dependencies:
-  mth-pagination:
-    specifier: ^0.0.7
-    version: 0.0.7
-
 devDependencies:
   '@testing-library/dom':
     specifier: ^8.16.0
@@ -3668,10 +3663,6 @@ packages:
   /ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: true
-
-  /mth-pagination@0.0.7:
-    resolution: {integrity: sha512-77MOIxGqnZBpCXlHimtj6rE1cXUfkkbrEZhtQ3Nx6KxMxgclmeCnUkni4HxUl1Pg2dY7bS/9IsgcI4HJCl88kA==}
-    dev: false
 
   /nanoid@3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
