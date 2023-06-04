@@ -14,8 +14,9 @@ export default defineConfig({
     minify: 'esbuild',
     lib: {
       entry: './lib/index.ts',
-      formats: ['cjs', 'es'],
-      fileName: (filename) => `${pkg.name}-${filename}.js`,
+      formats: ['cjs', 'es', 'umd'],
+      fileName: (filename) => `${pkg.name.split('/')[1]}-${filename}.js`,
+      name: 'mthReactPagination',
     },
     rollupOptions: {
       external: [...Object.keys(pkg.peerDependencies)],

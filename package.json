@@ -1,10 +1,12 @@
 {
-  "name": "mth-react-pagination",
+  "name": "@mhellams/mth-react-pagination",
   "private": false,
   "version": "0.0.1",
   "main": "dist/mth-react-pagination-cjs.js",
   "module": "dist/mth-react-pagination-es.js",
+  "browser": "dist/mth-react-pagination-umd.js",
   "types": "dist/index.d.ts",
+  "license": "mit",
   "files": [
     "dist"
   ],
@@ -13,12 +15,14 @@
     "format": "prettier . --write --ignore-path .gitignore && git update-index --again",
     "lint": "eslint . --config .eslintrc.build.json --ext .ts,.tsx --fix --ignore-path .gitignore",
     "build": "tsc && vite build && tsc --project tsconfig.build.json",
+    "prebuild": "yarn lint && yarn test:ci",
     "preview": "vite preview",
     "test": "vitest --reporter=verbose",
     "test:ci": "vitest run --reporter=verbose",
     "test:coverage": "vitest --watch=false --silent --coverage --reporter=verbose",
     "prepare": "husky install",
-    "postversion": "yarn build"
+    "publish": "npm publish --access public",
+    "prepublish": "yarn build"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.16.0",

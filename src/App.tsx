@@ -1,17 +1,20 @@
+import { useState } from 'react';
 import { useMthPagination } from '../lib';
 
 function App() {
+  const [page, setPage] = useState(1);
+
   const pagination = useMthPagination({
-    page: 1,
+    page: page,
     total: 10,
-    onChange(page) {
-      console.log(page);
-    },
+    onChange: setPage,
   });
 
   return (
     <div>
-      <h1>Page: {pagination.activePage}</h1>
+      <h1>
+        Page: {pagination.activePage}, Stage: {page}
+      </h1>
       <div style={{ display: 'inline-flex', gap: '1rem', flexWrap: 'wrap' }}>
         <button
           disabled={pagination.activePage === 1}

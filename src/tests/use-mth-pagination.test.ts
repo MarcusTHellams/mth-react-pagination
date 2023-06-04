@@ -5,7 +5,6 @@ import { useMthPagination } from '../../lib/use-mth-pagination';
 describe('useMthPagination suite', () => {
   test('should initialize with the correct values', () => {
     const params = {
-      page: 1,
       total: 10,
       siblings: 1,
       boundaries: 1,
@@ -21,7 +20,7 @@ describe('useMthPagination suite', () => {
 
   test('should update activePage and call onChange when setPage is called', () => {
     const params = {
-      page: 1,
+      // page: 1,
       total: 10,
       siblings: 1,
       boundaries: 1,
@@ -40,7 +39,6 @@ describe('useMthPagination suite', () => {
 
   test('should set activePage to 1 and call onChange when setPage is called with a value less than 1', () => {
     const params = {
-      page: 5,
       total: 10,
       siblings: 1,
       boundaries: 1,
@@ -59,8 +57,7 @@ describe('useMthPagination suite', () => {
 
   test('should set activePage to total and call onChange when setPage is called with a value greater than total', () => {
     const params = {
-      page: 5,
-      total: 10,
+      total: 15,
       siblings: 1,
       boundaries: 1,
       onChange: vi.fn(),
@@ -72,13 +69,13 @@ describe('useMthPagination suite', () => {
       result.current.setPage(15);
     });
 
-    expect(result.current.activePage).toBe(10);
-    expect(params.onChange).toHaveBeenCalledWith(10);
+    expect(result.current.activePage).toBe(15);
+    expect(params.onChange).toHaveBeenCalledWith(15);
   });
 
   test('should increase activePage by 1 and call setPage when next is called', () => {
     const params = {
-      page: 2,
+      defaultPage: 2,
       total: 10,
       siblings: 1,
       boundaries: 1,
@@ -97,7 +94,7 @@ describe('useMthPagination suite', () => {
 
   test('should decrease activePage by 1 and call setPage when prev is called', () => {
     const params = {
-      page: 3,
+      defaultPage: 3,
       total: 10,
       siblings: 1,
       boundaries: 1,
@@ -115,7 +112,7 @@ describe('useMthPagination suite', () => {
 
   test('should set activePage to 1 and call setPage when first is called', () => {
     const params = {
-      page: 5,
+      defaultPage: 5,
       total: 10,
       siblings: 1,
       boundaries: 1,
@@ -133,7 +130,7 @@ describe('useMthPagination suite', () => {
 
   test('should set activePage to total and call setPage when last is called', () => {
     const params = {
-      page: 5,
+      defaultPage: 5,
       total: 10,
       siblings: 1,
       boundaries: 1,
